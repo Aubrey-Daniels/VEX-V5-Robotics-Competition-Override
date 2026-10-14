@@ -15,8 +15,46 @@ the official **VEX Robotics VS Code extension**.
 > "Why this hardware is different" below before assuming anything you've
 > read about Smart Motor drivetrains applies here.
 
-If your team is looking for the PROS version of this repo instead, see the
-`cursor/pros4-starter-32de` branch -- that is a separate, unrelated stack.
+**Older branches in this repo** (`Template-1`, `visionSensorExampleCode`,
+`Aubrey-Daniels-Motor-control-practice-1`) predate this decision and contain
+`pros::`-namespaced code and an EZ-Template zip. They're kept for history,
+not deleted -- do not merge them into `main` or follow their README. See
+[docs/project-context.md § Superseded materials](docs/project-context.md#superseded-materials-do-not-use).
+
+## Documentation
+
+Start here, then branch out as needed:
+
+| Doc | Read this for |
+|---|---|
+| [docs/project-context.md](docs/project-context.md) | **Start here.** Durable team decisions (stack, hardware, timeline) -- if anything else conflicts with it, this file wins |
+| [docs/vex-learning-path.md](docs/vex-learning-path.md) | Beginner hub for the VEX C++ SDK -- if you're new, read this first |
+| [docs/vex-setup.md](docs/vex-setup.md) | Installing the extension, creating/opening a project, Build & Download, debugging |
+| [docs/vex-api-cheatsheet.md](docs/vex-api-cheatsheet.md) | Verified `vex::` signatures for every device this team might use |
+| [docs/vex-autonomous-concepts.md](docs/vex-autonomous-concepts.md) | Driver control, the auton ladder, tuning, auton selector |
+| [docs/six-week-plan.md](docs/six-week-plan.md) | Week-by-week build plan with the Oct 12 first-iteration checkpoint |
+| [docs/servo.md](docs/servo.md) | The 3-wire servo practice device: wiring, API, button test |
+| [docs/adding-a-new-part.md](docs/adding-a-new-part.md) | **How to try a new motor/sensor/mechanism without breaking `main`** |
+
+## Repository & team workflow
+
+This repo ([Aubrey-Daniels/VEX-V5-Robotics-Competition-Override](https://github.com/Aubrey-Daniels/VEX-V5-Robotics-Competition-Override))
+is the team's single shared project -- everyone builds and tests from the
+same `main`, instead of scattered local copies or one-off example files on
+disconnected branches.
+
+- **Branch per feature/part, PR back to `main`.** The repo already has this
+  habit (see PR #1); keep using it.
+- **Testing or developing a new part** (a motor, sensor, or mechanism you
+  haven't wired up yet)? Follow
+  [docs/adding-a-new-part.md](docs/adding-a-new-part.md) -- it's the same
+  pattern already used for the 3-wire servo (`include/servo-tests.h` /
+  `src/servo-tests.cpp` / [docs/servo.md](docs/servo.md)), so new test code
+  gets its own file pair and doc instead of landing as a loose file with no
+  project structure around it.
+- **Everyone uses the VEX Robotics VS Code extension -- not PROS, not the
+  standalone VEXcode Pro V5 app.** See [docs/project-context.md § Stack](docs/project-context.md#stack-corrected-oct-8-2026--authoritative)
+  for why.
 
 ## Why this hardware is different
 
@@ -70,7 +108,7 @@ src/
   auton-helpers.cpp
   autons.cpp
   servo-tests.cpp      servo center / jog / sweep, called from usercontrol
-docs/servo.md           what a 3-wire servo is, and the button test
+docs/                 full documentation set -- see "Documentation" above
 makefile, vex/          VEXcode build system (see "Verification" below)
 ```
 
@@ -175,6 +213,8 @@ meaningfully -- open-loop timing is sensitive to all three.
 ## Servo practice (3-wire)
 
 A `vex::servo` on a lettered 3-wire port is included for practice. It does **not** replace the MC55 drivetrain. Port letter, center (50°), jog step, and sweep speed are in `include/config.h`. What a servo is, how `setPosition` works, and the button procedure are in [docs/servo.md](docs/servo.md).
+
+This servo is also the **reference example** for trying any other new part (motor, sensor, mechanism) on this robot -- see [docs/adding-a-new-part.md](docs/adding-a-new-part.md) for the step-by-step pattern it follows, so your new part's test code gets the same clean, mergeable structure instead of a one-off file on a branch.
 
 ## Switching/choosing driver control mode
 
