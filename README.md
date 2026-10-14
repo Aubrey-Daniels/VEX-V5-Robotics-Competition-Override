@@ -55,18 +55,22 @@ include/
   robot-config.h       extern declarations for all hardware objects
   config.h              <-- the ONE file to edit: ports, reversals, max
                            voltage, deadband, drive mode, optional-sensor
-                           switches + PID gains
+                           switches + PID gains, and the servo port/travel, servo 3-wire port and
+                           servo travel/jog/sweep numbers
   drive-control.h      tank/arcade driver control (voltage-based)
   auton-helpers.h       PID class + time-based drive helpers (and
                            optional sensor-feedback helpers, gated off by
                            default)
   autons.h             example autonomous routines + selector
+  servo-tests.h        3-wire servo button tests (see docs/servo.md)
 src/
   main.cpp             competition callbacks (pre_auton/autonomous/usercontrol)
   robot-config.cpp     builds the hardware objects using config.h's settings
   drive-control.cpp
   auton-helpers.cpp
   autons.cpp
+  servo-tests.cpp      servo center / jog / sweep, called from usercontrol
+docs/servo.md           what a 3-wire servo is, and the button test
 makefile, vex/          VEXcode build system (see "Verification" below)
 ```
 
@@ -168,6 +172,10 @@ compete on, and adjust the seconds until it travels/turns the amount you
 want. Re-check it if the battery, floor, or robot weight changes
 meaningfully -- open-loop timing is sensitive to all three.
 
+## Servo practice (3-wire)
+
+A `vex::servo` on a lettered 3-wire port is included for practice. It does **not** replace the MC55 drivetrain. Port letter, center (50°), jog step, and sweep speed are in `include/config.h`. What a servo is, how `setPosition` works, and the button procedure are in [docs/servo.md](docs/servo.md).
+
 ## Switching/choosing driver control mode
 
 `config.h`'s `DEFAULT_DRIVE_MODE` picks TANK or ARCADE at boot. Drivers
@@ -248,6 +256,11 @@ install of the extension:
   reference pages, along with every other API call used in this
   template (`controller` axes/buttons, `competition::isEnabled`,
   `timer`, `Brain.Screen.*`).
+- **`vex::servo`**, against
+  `api.vex.com/v5/home/cpp/Motors_and_MotorControllers/servo_motor.html`
+  (constructor `servo(triport::port&)`, `setPosition` percent 0–100 and
+  degrees/turns, auto-center at 50 degrees) and the Blocks page for the
+  same device (travel 0–100 degrees). See `docs/servo.md`.
 
 What was **not** and **could not** be verified here:
 

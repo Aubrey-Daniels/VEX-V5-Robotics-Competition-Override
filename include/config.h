@@ -166,3 +166,31 @@ const double DRIVE_KD = 2.5;
 const double DRIVE_TOLERANCE_IN = 0.5; // "close enough" to stop driving
 const double DRIVE_TIMEOUT_SEC  = 4.0; // safety cutoff
 const double DRIVE_MAX_PERCENT  = 80.0; // caps PID output
+
+// ----------------------------------------------------------------------------
+// 7. 3-WIRE SERVO -- a practice device, separate from the drivetrain
+// ----------------------------------------------------------------------------
+// A VEX 3-wire servo holds an angle. It is not a drive motor and it does
+// not replace the Motor Controller 55 units above. Those stay on numbered
+// Smart Ports. A servo plugs into a lettered 3-Wire Port (A-H) on the
+// Brain. Change the letter here if you move that cable; robot-config.cpp
+// is the only place that letter is turned into a port.
+//
+// Travel, from the current VEX docs (see docs/servo.md): 0 degrees at one
+// end of the horn's travel, 100 degrees at the other, 50 degrees at the
+// center. The servo also jumps to that center by itself when a program
+// starts. There is no speed argument -- the tests below walk the angle
+// in small steps when a slow sweep is what you want.
+
+const char SERVO_3WIRE_PORT = 'A';
+
+const double SERVO_MIN_DEG = 0.0;
+const double SERVO_MAX_DEG = 100.0;
+const double SERVO_CENTER_DEG = 50.0;
+
+// One press of ButtonUp / ButtonDown moves the horn by this many degrees.
+const double SERVO_JOG_DEG = 5.0;
+
+// ButtonB walks the horn from end to end at this rate. The driver-control
+// loop waits 20 ms, and the sweep uses that wait as its clock.
+const double SERVO_SWEEP_DEG_PER_SEC = 10.0;

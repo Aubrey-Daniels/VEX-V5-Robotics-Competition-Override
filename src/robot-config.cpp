@@ -21,6 +21,42 @@ controller Controller1 = controller(primary);
 motor55 LeftDrive  = motor55(PORT_LEFT_DRIVE,  MAX_DRIVE_VOLTAGE, LEFT_MOTOR_REVERSED);
 motor55 RightDrive = motor55(PORT_RIGHT_DRIVE, MAX_DRIVE_VOLTAGE, RIGHT_MOTOR_REVERSED);
 
+// The servo constructor needs the 3-wire port object, not a letter. The
+// letter in config.h is the thing you edit; this switch is the lookup.
+// Brain is created just above, which the servo API requires -- the port
+// belongs to the Brain.
+static triport::port &servoThreeWirePort(void) {
+  switch (SERVO_3WIRE_PORT) {
+    case 'B':
+    case 'b':
+      return Brain.ThreeWirePort.B;
+    case 'C':
+    case 'c':
+      return Brain.ThreeWirePort.C;
+    case 'D':
+    case 'd':
+      return Brain.ThreeWirePort.D;
+    case 'E':
+    case 'e':
+      return Brain.ThreeWirePort.E;
+    case 'F':
+    case 'f':
+      return Brain.ThreeWirePort.F;
+    case 'G':
+    case 'g':
+      return Brain.ThreeWirePort.G;
+    case 'H':
+    case 'h':
+      return Brain.ThreeWirePort.H;
+    case 'A':
+    case 'a':
+    default:
+      return Brain.ThreeWirePort.A;
+  }
+}
+
+servo TestServo = servo(servoThreeWirePort());
+
 #if USE_INERTIAL_SENSOR
 inertial Inertial = inertial(PORT_INERTIAL);
 #endif

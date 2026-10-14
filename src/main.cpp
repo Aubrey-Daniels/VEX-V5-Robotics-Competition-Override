@@ -35,6 +35,7 @@
 #include "vex.h"
 #include "robot-config.h"
 #include "drive-control.h"
+#include "servo-tests.h"
 #include "auton-helpers.h"
 #include "autons.h"
 #include "config.h"
@@ -76,8 +77,14 @@ void autonomous(void) {
 }
 
 void usercontrol(void) {
+  // Servo buttons are registered here, not in pre_auton(). Up/Down/A are
+  // the auton selector's buttons while the robot is still disabled; they
+  // become servo controls only once driver control has actually started.
+  servoTestsInit();
+
   while (true) {
     driveControlUpdate();
+    servoTestsUpdate();
 
     // A short, regular pause each loop. Without it, this loop would spin
     // as fast as the CPU allows, burning processor time the rest of the

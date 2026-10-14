@@ -26,6 +26,10 @@ extern controller Controller1;
 extern motor55 LeftDrive;
 extern motor55 RightDrive;
 
+// One 3-wire servo for the practice tests in servo-tests.*. Not part of
+// the drivetrain. The port letter lives in config.h.
+extern servo TestServo;
+
 // Optional sensors -- only declared/created at all when the matching
 // switch in config.h is turned on. See the "OPTIONAL SENSORS" section of
 // config.h for what each one is for.
